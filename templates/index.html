@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Step-Wise Instruction Generator</title>
+</head>
+<body>
+    <h1>Step-Wise Instruction Generator</h1>
+
+    <form action="/generate" method="POST">
+        <input type="text" name="prompt" placeholder="Enter a prompt">
+        <input type="submit" value="Generate">
+    </form>
+
+    {% if response %}
+        <ul>
+            {% for step in response %}
+                <li>{{ step }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
