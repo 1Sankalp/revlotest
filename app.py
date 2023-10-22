@@ -5,7 +5,6 @@ from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain.utilities import WikipediaAPIWrapper
 import os
-import wikipedia
 app = Flask(__name__)
 
 import os
