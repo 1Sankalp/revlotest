@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revlo</title>
+    <link rel="icon" type="image/x-icon" href="static/img/logo.png">
+    <style>
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translate(-0%, 0%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #4169E1;
+            color: white;
+            padding: 50px 0;
+            animation: slideInFromTop 1.5s forwards;
+        }
+
+        #smallRevlo {
+            font-size: 70px;
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: -20px;
+            font-weight: bold;
+            cursor: pointer;        
+        }
+
+        .user-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #userIcon {
+            width: 50px;
+            margin-right: 15px;
+        }
+        #arrow {
+            cursor: pointer;
+            margin-left: 50px;
+            
+        }
+        #userQuery {
+            word-wrap: break-word;
+            max-width: 700px; /* Adjust this value as per your requirement */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .answer-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 40px 300px;
+            width: 56%;
+            line-height: 1.5;
+            flex-grow: 1;
+            overflow-y: auto;
+            
+            
+        }
+
+        .search-bar {
+            width: 54%;
+            padding: 20px 50px 20px 15px;
+            font-size: 18px;
+            border-radius: 15px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            display: block;
+            color: white;
+        }
+
+        .search-container {
+            position: relative;
+            margin: 20px auto;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .icon {
+            content: "";
+            position: absolute;
+            top: 63%;
+            right: 325px;
+            height: 20px;
+            width: 30px;
+            background: url("static/img/send.svg") no-repeat center;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+
+        .search-bar::placeholder {
+            color: white; 
+            opacity: 1; /* Ensuring the placeholder is fully opaque */
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .answer-point {
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fadeInLeft 0.5s forwards;
+        }
+   
+    </style>
+</head>
+<body>
+    <div id="smallRevlo">revlo</div>
+    <div class="user-container">
+        <img src="static/img/user.svg" alt="User Icon" id="userIcon">
+        <p id="userQuery">{{ user_query }}</p>
+        <img src="static/img/more.svg" alt="Down Arrow" id="arrow">
+    </div>
+    <div class="answer-box">
+        {% for point in response %}
+        <p class="answer-point">{{ point }}</p>
+        {% endfor %}
+    </div>
+    <form action="/generate" method="POST" id="searchForm">
+        <div class="search-container">
+            <input type="text" class="search-bar" name="prompt" placeholder="search..." id="prompt" required>
+            <div class="icon"></div>
+        </div>
+    </form>
+</body>
+<script>
+    document.getElementById("arrow").addEventListener("click", function() {
+        var query = document.getElementById("userQuery");
+        var arrowIcon = this;
+        if(query.style.whiteSpace === "nowrap") {
+            query.style.whiteSpace = "normal";
+            arrowIcon.src = "static/img/less.svg";
+        } else {
+            query.style.whiteSpace = "nowrap";
+            arrowIcon.src = "static/img/more.svg";
+        }
+    });
+
+    document.getElementById('prompt').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            document.getElementById('searchForm').submit();
+        }
+    });
+    document.querySelector(".icon").addEventListener("click", function() {
+        document.getElementById('searchForm').submit();
+    });
+
+    window.onload = function() {
+    var points = document.querySelectorAll('.answer-point');
+    for(let i = 0; i < points.length; i++) {
+        (function(index) {
+            setTimeout(function() {
+                points[index].style.animationDelay = `${index * 0.5}s`;
+                points[index].style.animationName = "fadeInLeft";
+            }, index * 50); // Adjust the delay as needed.
+        })(i);
+    }
+}
+
+document.getElementById("smallRevlo").addEventListener("click", function() {
+    window.location.href = "/";
+});
+
+</script>
+</html>

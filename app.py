@@ -51,15 +51,17 @@ def generate_response():
 
     if prompt:
         local_data = wiki_summary('final.txt')  
+        max_points = 4
         response = step_wise_chain.run(title=prompt, local_data=local_data)
 
+        response_points = response.strip().split('\n\n') 
         
         # Format the response into points
-        formatted_response = format_response(response)
+        formatted_response = response_points[:max_points]
     else:
         formatted_response = ["Please enter a prompt."]
 
-    return render_template('index.html', response=formatted_response)
+    return render_template('result.html', response=formatted_response, user_query=prompt)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

@@ -1,22 +1,181 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Step-Wise Instruction Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revlo</title>
+    <link rel="icon" type="image/x-icon" href="static/img/logo.png">
+    <style>
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translate(-0%, 0%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(0, 0);
+            }
+        }
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #4169E1;
+            color: white;
+            text-align: center;
+            padding: 5%;
+            animation: slideInFromTop 2s forwards;
+        }
+
+        h1 {
+            font-size: 5em;
+            margin-bottom: 2%;
+            margin-top: -1%;
+            cursor: pointer;
+        }
+
+        text {
+            font-size: 1.75em;
+            margin-bottom: 1%;
+            text-align: left;
+            
+        }
+
+        p {
+            font-size: 3em;
+            margin-top: 4%;
+            margin-bottom: -4%;
+            text-align: left;
+            margin-left: 20%;
+            font-weight: bold;
+
+        }
+
+        .des {
+            font-size: 1.5em;
+            margin-top: 5%;
+            margin-bottom: 10%;
+            text-align: left;
+            margin-left: 20%;
+            font-weight: 100;
+            
+        }
+
+
+        .text{
+            font-size: .75em;
+            color: white;
+            margin-top: -9%;
+            text-align: left;
+            margin-left: 15%;
+        }
+
+        .search-bar {
+            width: 80%;
+            padding: 2% 7% 2% 1.5%; /* Adjusted the right padding to accommodate the arrow icon */
+            font-size: 1.1em;
+            border-radius: 15px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.1); /* Use Flask's url_for to point to the send.png in the static directory */
+            margin: 2% auto;
+            margin-bottom: 10%;
+            display: block;
+            color: white;
+        }
+
+        .search-container {
+            position: relative;
+            margin: 2% auto;
+            width: 80%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .icon {
+            content: "";
+            position: absolute;
+            top: 27%;
+            right: 8%;
+            width: 30px;
+            height: 30px; 
+            background: url('static/img/send.svg') no-repeat center;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+        .search-bar::placeholder {
+            color: white; 
+            opacity: 1; /* Ensuring the placeholder is fully opaque */
+        }
+        
+        button {
+            padding: 1% 2%;
+            font-size: 1.1em;
+            background-color: white;
+            color: #4169E1;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2e4da7;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            p, .des {
+                margin-left: 2%;
+            }
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 84%;
+            left: 84%;
+            transform: translate(-50%, -50%);
+            display: none;  /* Initially hidden */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+    </style>
 </head>
 <body>
-    <h1>Step-Wise Instruction Generator</h1>
-
-    <form action="/generate" method="POST">
-        <input type="text" name="prompt" placeholder="Enter a prompt">
-        <input type="submit" value="Generate">
+    <h1>revlo</h1>
+    <text>We help startups get initial traction and find Product-Market Fit</text>
+    <p>Hello there 👋🏻</p>
+    <p class="des">Just describe your idea and ask how to get first 1000 users</p>
+    <form action="/generate" method="post" id="searchForm">
+        <div class="search-container">
+            <input type="text" class="search-bar" id="prompt" name="prompt" placeholder="search..." required>
+            <div class="icon"></div>
+        </div>
     </form>
-
-    {% if response %}
-        <ul>
-            {% for step in response %}
-                <li>{{ step }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    <div id="loader" class="loader"></div>
+    <p class="text">We are in Beta, responses may not be accurate or specific enough.</p>
 </body>
+<script>
+    document.getElementById('prompt').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            showLoader();
+            document.getElementById('searchForm').submit();
+        }
+    });
+    document.querySelector(".icon").addEventListener("click", function() {
+        showLoader();
+        document.getElementById('searchForm').submit();
+    });
+    function showLoader() {
+    document.getElementById('loader').style.display = "block";
+}
+</script>
 </html>
