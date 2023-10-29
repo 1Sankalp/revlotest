@@ -145,10 +145,77 @@
             100% { transform: rotate(360deg); }
         }
 
+        .container{
+            body{
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            
+            h1{
+                font-size: 4.5em;
+                margin-top: 5%;
+                margin-bottom: 5%;
+            }
+            text{
+                font-size: .8em;
+                text-align: left;
+            }   
+            p{
+                font-size: 2.5em;
+                margin-left: 2%;
+                margin-top: 10%;
+            }
+            .des{
+                font-size: .8em;
+                margin-top: 5%;
+                margin-bottom: 110%;
+                text-align: left;
+                margin-left: 2%;
+            }
+
+            .text{
+                font-size: .6em;
+                margin-top: -9%;
+                text-align: center;
+                margin-left: -15%;
+            }
+            
+            .search-bar{
+                width: 100%;
+                padding: 5% 10% 5% 1.5%;
+            }
+            .search-container{
+                width: 100%;
+            }
+
+            .icon{
+                top: 37%;
+                right: 2%;
+            }
+            .search-bar::placeholder {
+                font-size: 1em;
+                padding-left: 2%;
+            }
+           
+        
+            button{
+                font-size: 1em;
+            }
+
+            .loader{
+                top: 90.5%;
+                left: 92%;
+            }
+          
+        }
+
 
     </style>
 </head>
 <body>
+    <div class="container"></div>
     <h1>revlo</h1>
     <text>We help startups get initial traction and find Product-Market Fit</text>
     <p>Hello there 👋🏻</p>
@@ -161,6 +228,7 @@
     </form>
     <div id="loader" class="loader"></div>
     <p class="text">We are in Beta, responses may not be accurate or specific enough.</p>
+    </div>
 </body>
 <script>
     document.getElementById('prompt').addEventListener('keydown', function(e) {

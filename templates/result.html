@@ -30,8 +30,7 @@
             margin-bottom: 40px;
             margin-top: -20px;
             font-weight: bold;
-            cursor: pointer;        
-        }
+            cursor: pointer;        }
 
         .user-container {
             display: flex;
@@ -124,16 +123,49 @@
             transform: translateX(-20px);
             animation: fadeInLeft 0.5s forwards;
         }
+
+        .container{
+            body{
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .answer-box {
+                margin: 40px 20px;
+                width: 80%;
+
+            }
+
+            .search-bar {
+                width: 80%;
+            }
+
+            .icon {
+                right: 20px;
+            }
+
+            #arrow {
+                margin-left: 20px;
+            }
+
+            #userQuery {
+                max-width: 300px;
+            }
+        }
    
     </style>
 </head>
 <body>
+    <div class="container"></div>
     <div id="smallRevlo">revlo</div>
     <div class="user-container">
         <img src="static/img/user.svg" alt="User Icon" id="userIcon">
         <p id="userQuery">{{ user_query }}</p>
         <img src="static/img/more.svg" alt="Down Arrow" id="arrow">
     </div>
+    <div class="scroll">
     <div class="answer-box">
         {% for point in response %}
         <p class="answer-point">{{ point }}</p>
@@ -145,6 +177,7 @@
             <div class="icon"></div>
         </div>
     </form>
+    </div>
 </body>
 <script>
     document.getElementById("arrow").addEventListener("click", function() {
